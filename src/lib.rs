@@ -26,7 +26,7 @@ pub fn roots(p: &[f64]) -> Vec<Complex<f64>> {
         .count();
     let non_zero = &non_zero[non_zero_start..];
 
-    let matrix_size = p.len() - 1;
+    let matrix_size = non_zero.len() - 1;
 
     let roots = if matrix_size > 1 {
         // Now create companion matrix
@@ -40,10 +40,14 @@ pub fn roots(p: &[f64]) -> Vec<Complex<f64>> {
             .cloned()
             .map(|x| -1.0 * (x / divisor));
 
+        println!("{:?}", companion_matrix);
+        println!("{:?}", p_col);
+        println!("{:?}", matrix_size);
         companion_matrix.set_column(
             matrix_size-1,
             &DVector::from_iterator(matrix_size, p_col),
         );
+        println!("hit2");
 
         Some(Schur::new(companion_matrix).complex_eigenvalues())
     } else {
@@ -78,5 +82,12 @@ mod tests {
         let rs = roots(&[3.2, 2.0, 1.0]);
         println!("{:?}", rs);
         //panic!()
+    }
+
+    #[test]
+    fn trailing_zero() {
+        let input = &[-185453200.3173828, -7850902.27355957, 6214230.003356934, 2605200.0732421875, 0.0, 0.0, 22793749.755859375, 64418824.798583984, -67894928.98165894, 18489907.76702881, 51488987.86062622, 0.0];
+        let input: Vec<f64> = input.into_iter().rev().cloned().collect();
+        let rs = roots(input.as_slice());
     }
 }
