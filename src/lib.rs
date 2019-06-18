@@ -40,14 +40,10 @@ pub fn roots(p: &[f64]) -> Vec<Complex<f64>> {
             .cloned()
             .map(|x| -1.0 * (x / divisor));
 
-        println!("{:?}", companion_matrix);
-        println!("{:?}", p_col);
-        println!("{:?}", matrix_size);
         companion_matrix.set_column(
             matrix_size-1,
             &DVector::from_iterator(matrix_size, p_col),
         );
-        println!("hit2");
 
         Some(Schur::new(companion_matrix).complex_eigenvalues())
     } else {
