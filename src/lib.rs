@@ -86,4 +86,27 @@ mod tests {
         let input: Vec<f64> = input.into_iter().rev().cloned().collect();
         let rs = roots(input.as_slice());
     }
+
+    #[test]
+    fn hanging() {
+        let input = &[
+            -770.9700059294701,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            434.3959909081459,
+            0.0,
+        ];
+
+        let input: Vec<f64> = input.into_iter().rev().cloned().collect();
+        dbg!(&input);
+        let rs = roots(input.as_slice());
+        panic!();
+    }
 }
