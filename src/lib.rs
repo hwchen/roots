@@ -45,7 +45,7 @@ pub fn roots(p: &[f64]) -> Vec<Complex<f64>> {
             &DVector::from_iterator(matrix_size, p_col),
         );
 
-        companion_matrix.try_schur(0.5, 1000)
+        companion_matrix.try_schur(0.000001, 10000)
             .map(|m| m.complex_eigenvalues())
     } else {
         None
