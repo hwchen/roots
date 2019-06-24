@@ -45,7 +45,8 @@ pub fn roots(p: &[f64]) -> Vec<Complex<f64>> {
             &DVector::from_iterator(matrix_size, p_col),
         );
 
-        Some(Schur::new(companion_matrix).complex_eigenvalues())
+        companion_matrix.try_schur(0.5, 1000)
+            .map(|m| m.complex_eigenvalues())
     } else {
         None
     };
@@ -107,6 +108,7 @@ mod tests {
         let input: Vec<f64> = input.into_iter().rev().cloned().collect();
         dbg!(&input);
         let rs = roots(input.as_slice());
-        panic!();
+        println!("hanging: {:?}", rs);
+        //panic!();
     }
 }
